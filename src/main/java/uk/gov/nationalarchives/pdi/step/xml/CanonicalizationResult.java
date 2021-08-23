@@ -4,38 +4,29 @@ public class CanonicalizationResult {
 
     private final String canonicalXml;
     private String errorMessage = "";
-    private Boolean hasErrors = false;
-    private Long errorCount = 0L;
+    private boolean hasError = false;
 
     public CanonicalizationResult(final String canonicalXml) {
         this.canonicalXml = canonicalXml;
-    };
+    }
 
     public String getCanonicalXml() {
         return canonicalXml;
     }
 
-    public Boolean hasErrors() {
-        return hasErrors;
+    public boolean hasError() {
+        return hasError;
     }
 
-    public void setHasErrors(final Boolean hasErrors) {
-        this.hasErrors = hasErrors;
-    }
-
-    public Long getErrorCount() {
-        return errorCount;
-    }
-
-    public void incrementErrorCount() {
-        errorCount++;
+    public void setHasError(final boolean hasError) {
+        this.hasError = hasError;
     }
 
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public void setErrorMessage(final String errorMessage) {
         this.errorMessage = errorMessage;
     }
 

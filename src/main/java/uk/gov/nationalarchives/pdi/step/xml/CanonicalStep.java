@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.xml.security.c14n.Canonicalizer;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.RowDataUtil;
+import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.*;
@@ -16,6 +17,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 
 public class CanonicalStep extends BaseStep implements StepInterface {
+
+    private static final Class<?> PKG = CanonicalStep.class;
+
     /**
      * This is the base step that forms that basis for all steps. You can derive from this class to implement your own
      * steps.
@@ -27,7 +31,7 @@ public class CanonicalStep extends BaseStep implements StepInterface {
      * @param transMeta         The TransInfo of which the step stepMeta is part of.
      * @param trans             The (running) transformation to obtain information shared among the steps.
      */
-    public CanonicalStep(StepMeta stepMeta, StepDataInterface stepDataInterface, int copyNr, TransMeta transMeta, Trans trans) {
+    public CanonicalStep(final StepMeta stepMeta, final StepDataInterface stepDataInterface, final int copyNr, final TransMeta transMeta, final Trans trans) {
         super(stepMeta, stepDataInterface, copyNr, transMeta, trans);
     }
 
@@ -42,10 +46,10 @@ public class CanonicalStep extends BaseStep implements StepInterface {
             return false;
         }
 
-        if(first) {
+        if (first) {
             first = false;
             data.setOutputRowMeta(getInputRowMeta().clone());
-            meta.getFields( data.getOutputRowMeta(), getStepname(), null, null, this, null, null );
+            meta.getFields(data.getOutputRowMeta(), getStepname(), null, null, this, null, null);
             data.setXmlFieldIdx(getInputRowMeta().indexOfValue(meta.getInputField()));
             data.setOutputFieldIndex(data.getOutputRowMeta().indexOfValue(meta.getOutputField()));
             org.apache.xml.security.Init.init();
@@ -53,31 +57,29 @@ public class CanonicalStep extends BaseStep implements StepInterface {
             data.setDocumentBuilder(getDocumentBuilder());
         }
         final Object xmlFieldValue = row[data.getXmlFieldIdx()];
-        if(xmlFieldValue instanceof String) {
-            final CanonicalizationResult result = process((String)xmlFieldValue,data);
-            if(result.hasErrors()) {
-                putError(data.getOutputRowMeta(), row, result.getErrorCount(), result.getErrorMessage(), meta.getInputField(), "CanonicalStep001");
+        if (xmlFieldValue instanceof String) {
+            final CanonicalizationResult result = process((String) xmlFieldValue, data);
+            if (result.hasError()) {
+                putError(data.getOutputRowMeta(), row, 1L, result.getErrorMessage(), meta.getInputField(), "CanonicalStep001");
             } else {
-                Object[] outputRow = RowDataUtil.resizeArray(row,data.getOutputRowMeta().size());
+                Object[] outputRow = RowDataUtil.resizeArray(row, data.getOutputRowMeta().size());
                 outputRow[data.getOutputFieldIndex()] = result.getCanonicalXml();
-                putRow(data.getOutputRowMeta(),outputRow);
+                putRow(data.getOutputRowMeta(), outputRow);
             }
             return true;
         } else {
-            throw new KettleException("Expected field " + meta.getInputField() + " to contain XML as type java.lang.String, but found "
-                    + xmlFieldValue.getClass());
+            throw new KettleException(BaseMessages.getString(PKG, "CanonicalStep.Error.XmlStringNotFound", meta.getInputField(), xmlFieldValue.getClass()));
         }
     }
 
-    private CanonicalizationResult process(String xmlString, CanonicalStepData data) {
-        try{
-            final Document xmlDoc = createDocument(xmlString,data);
-            return new CanonicalizationResult(canonicalize(xmlDoc,data));
+    private CanonicalizationResult process(final String xmlString, final CanonicalStepData data) {
+        try {
+            final Document xmlDoc = createDocument(xmlString, data);
+            return new CanonicalizationResult(canonicalize(xmlDoc, data));
         } catch (KettleException kex) {
             CanonicalizationResult result = new CanonicalizationResult("");
             result.setErrorMessage(kex.getMessage());
-            result.setHasErrors(true);
-            result.incrementErrorCount();
+            result.setHasError(true);
             return result;
         }
     }
@@ -86,7 +88,7 @@ public class CanonicalStep extends BaseStep implements StepInterface {
         try {
             return Canonicalizer.getInstance(Canonicalizer.ALGO_ID_C14N_EXCL_WITH_COMMENTS);
         } catch (Exception e) {
-            throw new KettleException(e.getMessage(),e);
+            throw new KettleException(e.getMessage(), e);
         }
     }
 
@@ -99,21 +101,21 @@ public class CanonicalStep extends BaseStep implements StepInterface {
         }
     }
 
-    private Document createDocument(String xmlString, final CanonicalStepData data) throws KettleException {
-        try{
+    private Document createDocument(final String xmlString, final CanonicalStepData data) throws KettleException {
+        try {
             return data.getDocumentBuilder().parse(new InputSource(new StringReader(xmlString)));
         } catch (Exception e) {
-            throw new KettleException(e.getMessage(),e);
+            throw new KettleException(e.getMessage(), e);
         }
     }
 
-    protected static String canonicalize(Document document, CanonicalStepData data) throws KettleException {
+    protected static String canonicalize(final Document document, final CanonicalStepData data) throws KettleException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try{
+        try {
             data.getCanonicalizer().canonicalizeSubtree(document, baos);
             return baos.toString();
         } catch (Exception e) {
-            throw new KettleException(e.getMessage(),e);
+            throw new KettleException(e.getMessage(), e);
         } finally {
             IOUtils.closeQuietly(baos);
         }

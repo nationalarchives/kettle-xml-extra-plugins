@@ -19,6 +19,8 @@ import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.*;
 import org.pentaho.metastore.api.IMetaStore;
 import org.w3c.dom.Node;
+import org.pentaho.di.i18n.BaseMessages;
+
 
 import java.util.List;
 
@@ -31,6 +33,8 @@ import java.util.List;
         i18nPackageName = "uk.gov.nationalarchives.pdi.step.xml"
 )
 public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface {
+
+    private static final Class<?> PKG = CanonicalStepMeta.class;
 
     private static final String ELEM_NAME_INPUT_FIELD = "inputField";
     private static final String ELEM_NAME_OUTPUT_FIELD = "outputField";
@@ -52,26 +56,26 @@ public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface
     @Override
     public void setDefault() {
         setInputField("");
-        setOutputField( "canonical_xml" );
+        setOutputField("canonical_xml");
     }
 
     /**
      * Called by Spoon to get a new instance of the SWT dialog for the step.
      * A standard implementation passing the arguments to the constructor of the step dialog is recommended.
      *
-     * @param shell    an SWT Shell
-     * @param meta     description of the step
-     * @param transMeta  description of the the transformation
-     * @param name    the name of the step
-     * @return       new instance of a dialog for this step
+     * @param shell     an SWT Shell
+     * @param meta      description of the step
+     * @param transMeta description of the the transformation
+     * @param name      the name of the step
+     * @return new instance of a dialog for this step
      */
-    public StepDialogInterface getDialog(Shell shell, StepMetaInterface meta, TransMeta transMeta, String name ) {
-        return new CanonicalStepDialog( shell, meta, transMeta, name );
+    public StepDialogInterface getDialog(final Shell shell, final StepMetaInterface meta, final TransMeta transMeta, final String name) {
+        return new CanonicalStepDialog(shell, meta, transMeta, name);
     }
 
     @Override
-    public StepInterface getStep(StepMeta stepMeta, StepDataInterface stepDataInterface, int copyNr, TransMeta transMeta, Trans trans) {
-        return new CanonicalStep( stepMeta, stepDataInterface, copyNr, transMeta, trans );
+    public StepInterface getStep(final StepMeta stepMeta, final StepDataInterface stepDataInterface, final int copyNr, final TransMeta transMeta, final Trans trans) {
+        return new CanonicalStep(stepMeta, stepDataInterface, copyNr, transMeta, trans);
     }
 
     @Override
@@ -94,51 +98,53 @@ public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface
 
     /**
      * Setter for the name of the field added by this step
+     *
      * @param outputField the name of the field added
      */
-    public void setOutputField( String outputField ) {
+    public void setOutputField(final String outputField) {
         this.outputField = outputField;
     }
 
     /**
      * Setter for the name of the input field to this step
+     *
      * @param inputField the name of the field used
      */
-    public void setInputField( String inputField ) {
+    public void setInputField(final String inputField) {
         this.inputField = inputField;
     }
 
     /**
      * This method is called by Spoon when a step needs to serialize its configuration to XML. The expected
      * return value is an XML fragment consisting of one or more XML tags.
-     *
+     * <p>
      * Please use org.pentaho.di.core.xml.XMLHandler to conveniently generate the XML.
      *
      * @return a string containing the XML serialization of this step
      */
     public String getXML() throws KettleValueException {
         StringBuilder xml = new StringBuilder();
-        xml.append( XMLHandler.addTagValue(ELEM_NAME_INPUT_FIELD, inputField ));
-        xml.append( XMLHandler.addTagValue(ELEM_NAME_OUTPUT_FIELD, outputField ));
+        xml.append(XMLHandler.addTagValue(ELEM_NAME_INPUT_FIELD, inputField));
+        xml.append(XMLHandler.addTagValue(ELEM_NAME_OUTPUT_FIELD, outputField));
         return xml.toString();
     }
 
     /**
      * This method is called by PDI when a step needs to load its configuration from XML.
-     *
+     * <p>
      * Please use org.pentaho.di.core.xml.XMLHandler to conveniently read from the
      * XML node passed in.
      *
      * @param stepnode  the XML node containing the configuration
-     * @param databases  the databases available in the transformation
+     * @param databases the databases available in the transformation
      * @param metaStore the metaStore to optionally read from
      */
-    public void loadXML(Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException {
+    public void loadXML(final Node stepnode, final List<DatabaseMeta> databases, final IMetaStore metaStore) throws KettleXMLException {
         try {
-            setInputField( XMLHandler.getNodeValue( XMLHandler.getSubNode(stepnode, ELEM_NAME_INPUT_FIELD)));
-            setOutputField( XMLHandler.getNodeValue( XMLHandler.getSubNode(stepnode, ELEM_NAME_OUTPUT_FIELD)));
-        } catch ( Exception e ) {
-            throw new KettleXMLException( "Demo plugin unable to read step info from XML node", e );
+            setInputField(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode, ELEM_NAME_INPUT_FIELD)));
+            setOutputField(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode, ELEM_NAME_OUTPUT_FIELD)));
+        } catch (Exception e) {
+            throw new KettleXMLException(BaseMessages.getString(PKG, "CanonicalStepMeta.Error.UnableToReadStepInfo"), e);
         }
     }
 
@@ -146,18 +152,18 @@ public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface
      * This method is called by Spoon when a step needs to serialize its configuration to a repository.
      * The repository implementation provides the necessary methods to save the step attributes.
      *
-     * @param rep                 the repository to save to
-     * @param metaStore           the metaStore to optionally write to
-     * @param id_transformation   the id to use for the transformation when saving
-     * @param id_step             the id to use for the step  when saving
+     * @param rep               the repository to save to
+     * @param metaStore         the metaStore to optionally write to
+     * @param id_transformation the id to use for the transformation when saving
+     * @param id_step           the id to use for the step  when saving
      */
-    public void saveRep(Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step )
+    public void saveRep(final Repository rep, final IMetaStore metaStore, final ObjectId id_transformation, final ObjectId id_step)
             throws KettleException {
         try {
-            rep.saveStepAttribute( id_transformation, id_step, ELEM_NAME_INPUT_FIELD, inputField );
-            rep.saveStepAttribute( id_transformation, id_step, ELEM_NAME_OUTPUT_FIELD, outputField ); //$NON-NLS-1$
-        } catch ( Exception e ) {
-            throw new KettleException( "Unable to save step into repository: " + id_step, e );
+            rep.saveStepAttribute(id_transformation, id_step, ELEM_NAME_INPUT_FIELD, inputField);
+            rep.saveStepAttribute(id_transformation, id_step, ELEM_NAME_OUTPUT_FIELD, outputField); //$NON-NLS-1$
+        } catch (Exception e) {
+            throw new KettleException("Unable to save step into repository: " + id_step, e);
         }
     }
 
@@ -165,18 +171,18 @@ public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface
      * This method is called by PDI when a step needs to read its configuration from a repository.
      * The repository implementation provides the necessary methods to read the step attributes.
      *
-     * @param rep        the repository to read from
-     * @param metaStore  the metaStore to optionally read from
-     * @param id_step    the id of the step being read
-     * @param databases  the databases available in the transformation
+     * @param rep       the repository to read from
+     * @param metaStore the metaStore to optionally read from
+     * @param id_step   the id of the step being read
+     * @param databases the databases available in the transformation
      */
-    public void readRep( Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases )
+    public void readRep(final Repository rep, final IMetaStore metaStore, final ObjectId id_step, final List<DatabaseMeta> databases)
             throws KettleException {
         try {
-            inputField = rep.getStepAttributeString( id_step, ELEM_NAME_INPUT_FIELD); //$NON-NLS-1$
-            outputField  = rep.getStepAttributeString( id_step, ELEM_NAME_OUTPUT_FIELD); //$NON-NLS-1$
-        } catch ( Exception e ) {
-            throw new KettleException( "Unable to load step from repository", e );
+            inputField = rep.getStepAttributeString(id_step, ELEM_NAME_INPUT_FIELD); //$NON-NLS-1$
+            outputField = rep.getStepAttributeString(id_step, ELEM_NAME_OUTPUT_FIELD); //$NON-NLS-1$
+        } catch (Exception e) {
+            throw new KettleException("Unable to load step from repository", e);
         }
     }
 
@@ -186,32 +192,32 @@ public class CanonicalStepMeta extends BaseStepMeta implements StepMetaInterface
      * the step. This method must apply any changes the step makes to the row stream. Usually a step adds fields to the
      * row-stream.
      *
-     * @param inputRowMeta    the row structure coming in to the step
+     * @param inputRowMeta the row structure coming in to the step
      * @param name         the name of the step making the changes
-     * @param info        row structures of any info steps coming in
-     * @param nextStep      the description of a step this step is passing rows to
+     * @param info         row structures of any info steps coming in
+     * @param nextStep     the description of a step this step is passing rows to
      * @param space        the variable space for resolving variables
-     * @param repository    the repository instance optionally read from
-     * @param metaStore      the metaStore to optionally read from
+     * @param repository   the repository instance optionally read from
+     * @param metaStore    the metaStore to optionally read from
      */
-    public void getFields(RowMetaInterface inputRowMeta, String name, RowMetaInterface[] info, StepMeta nextStep,
-                          VariableSpace space, Repository repository, IMetaStore metaStore ) throws KettleStepException {
+    public void getFields(final RowMetaInterface inputRowMeta, final String name, final RowMetaInterface[] info, final StepMeta nextStep,
+                          final VariableSpace space, final Repository repository, final IMetaStore metaStore) throws KettleStepException {
 
         /*
          * This implementation appends the outputField to the row-stream
          */
 
         // a value meta object contains the meta data for a field
-        ValueMetaInterface v = new ValueMetaString( outputField );
+        ValueMetaInterface v = new ValueMetaString(outputField);
 
         // setting trim type to "both"
-        v.setTrimType( ValueMetaInterface.TRIM_TYPE_BOTH );
+        v.setTrimType(ValueMetaInterface.TRIM_TYPE_BOTH);
 
         // the name of the step that adds this field
-        v.setOrigin( name );
+        v.setOrigin(name);
 
         // modify the row structure and add the field this step generates
-        inputRowMeta.addValueMeta( v );
+        inputRowMeta.addValueMeta(v);
     }
 
 }

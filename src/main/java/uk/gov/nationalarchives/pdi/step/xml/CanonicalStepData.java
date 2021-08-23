@@ -15,7 +15,7 @@ public class CanonicalStepData extends BaseStepData implements StepDataInterface
     private int xmlFieldIdx;
     private int outputFieldIndex = -1;
 
-    public void setXmlFieldIdx(int xmlFieldIdx) {
+    public void setXmlFieldIdx(final int xmlFieldIdx) {
         this.xmlFieldIdx = xmlFieldIdx;
     }
 
@@ -23,11 +23,11 @@ public class CanonicalStepData extends BaseStepData implements StepDataInterface
         return outputFieldIndex;
     }
 
-    public void setOutputFieldIndex(int outputFieldIndex) {
+    public void setOutputFieldIndex(final int outputFieldIndex) {
         this.outputFieldIndex = outputFieldIndex;
     }
 
-    public void setCanonicalizer(Canonicalizer canon) {
+    public void setCanonicalizer(final Canonicalizer canon) {
         this.canon = canon;
     }
 
@@ -35,7 +35,7 @@ public class CanonicalStepData extends BaseStepData implements StepDataInterface
         return canon;
     }
 
-    public void setOutputRowMeta(RowMetaInterface outputRowMeta) {
+    public void setOutputRowMeta(final RowMetaInterface outputRowMeta) {
         this.outputRowMeta = outputRowMeta;
     }
 
@@ -43,7 +43,7 @@ public class CanonicalStepData extends BaseStepData implements StepDataInterface
         return outputRowMeta;
     }
 
-    public void setDocumentBuilder(DocumentBuilder builder) {
+    public void setDocumentBuilder(final DocumentBuilder builder) {
         this.builder = builder;
     }
 

@@ -23,7 +23,7 @@ public class CanonicalStepTest {
         when(mockData.getCanonicalizer()).thenReturn(Canonicalizer.getInstance(Canonicalizer.ALGO_ID_C14N_EXCL_WITH_COMMENTS));
         Document testXmlDoc = getTestDocument("<doc>&#8220;test&#8221;</doc>");
         String result = CanonicalStep.canonicalize(testXmlDoc, mockData);
-        assertEquals("<doc>“test”</doc>",result);
+        assertEquals("<doc>“test”</doc>", result);
     }
 
     private Document getTestDocument(final String xmlString) throws Exception {
