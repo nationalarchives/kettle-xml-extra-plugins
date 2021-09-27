@@ -10,10 +10,10 @@ is commonly known), that add additional functionality for working with XML.
 
 The plugins provided are:
 
-* Transform to Canonical XML
+1. Transform to Canonical XML
 
     <img alt="Create Jena Model Icon" src="https://raw.githubusercontent.com/nationalarchives/kettle-xml-extra-plugins/main/src/main/resources/CanonicalStep.svg" width="32"/>
-    This transform plugin can be used to convert XML held as a java.util.String value in field to [C14N Canonical XML](https://www.w3.org/TR/xml-exc-c14n/).
+    This transform plugin can be used to convert XML held as a `java.util.String` value in a field to <a href="https://www.w3.org/TR/xml-exc-c14n/">C14N Canonical XML</a>.
 
 This project was developed by [Evolved Binary](https://evolvedbinary.com) and [DeveXe](https://devexe.co.uk) as part of
 Project OMEGA for the [National Archives](https://nationalarchives.gov.uk).
