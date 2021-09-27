@@ -9,8 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Kettle XML Extra Plugins</name>
-    <description>Plugins for Pentaho Data Integration (KETTLE) with additional functionality for working with XML
-    </description>
+    <description>Plugins for Pentaho Data Integration (KETTLE) with additional functionality for working with XML</description>
     <url>https://github.com/nationalarchives/kettle-best-xml-plugins</url>
 
     <repositories>
@@ -319,6 +318,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.1.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
