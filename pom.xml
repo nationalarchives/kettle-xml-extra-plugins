@@ -12,6 +12,12 @@
     <description>Plugins for Pentaho Data Integration (KETTLE) with additional functionality for working with XML</description>
     <url>https://github.com/nationalarchives/kettle-best-xml-plugins</url>
 
+    <scm>
+        <connection>scm:git:https://github.com/nationalarchives/kettle-xml-extra-plugins.git</connection>
+        <developerConnection>scm:git:https://github.com/nationalarchives/kettle-xml-extra-plugins.git</developerConnection>
+        <url>scm:git:https://github.com/nationalarchives/kettle-xml-extra-plugins.git</url>
+    </scm>
+
     <repositories>
         <repository>
             <id>pentaho-nexus</id>
