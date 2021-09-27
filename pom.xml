@@ -10,7 +10,40 @@
 
     <name>Kettle XML Extra Plugins</name>
     <description>Plugins for Pentaho Data Integration (KETTLE) with additional functionality for working with XML</description>
-    <url>https://github.com/nationalarchives/kettle-best-xml-plugins</url>
+    <url>https://github.com/nationalarchives/kettle-xml-extra-plugins</url>
+
+    <inceptionYear>2021</inceptionYear>
+
+    <organization>
+        <name>The National Archives</name>
+        <url>https://nationalarchives.gov.uk</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Rob Walpole</name>
+            <organization>DeveXe</organization>
+            <email>rob.walpole@devexe.co.uk </email>
+            <organizationUrl>https://www.devexe.co.uk</organizationUrl>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Adam Retter</name>
+            <organization>Evolved Binary</organization>
+            <email>adam@evolvedbinary.com</email>
+            <organizationUrl>https://www.evolvedbinary.com</organizationUrl>
+        </contributor>
+    </contributors>
 
     <scm>
         <connection>scm:git:https://github.com/nationalarchives/kettle-xml-extra-plugins.git</connection>
