@@ -30,7 +30,7 @@
 
     <groupId>uk.gov.nationalarchives.pdi</groupId>
     <artifactId>kettle-xml-extra-plugins</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>Kettle XML Extra Plugins</name>
     <description>Plugins for Pentaho Data Integration (KETTLE) with additional functionality for working with XML</description>
