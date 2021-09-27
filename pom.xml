@@ -125,12 +125,6 @@
         </dependency>
         <dependency>
             <groupId>pentaho</groupId>
-            <artifactId>pentaho-metaverse-api</artifactId>
-            <version>${pentaho-kettle.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>pentaho</groupId>
             <artifactId>metastore</artifactId>
             <version>${pentaho-kettle.version}</version>
             <scope>provided</scope>
@@ -279,13 +273,9 @@
                             </ignoredUsedUndeclaredDependencies>
                             <ignoredUnusedDeclaredDependencies>
                                 <!-- used at runtime for test scope -->
-                                <ignoredUnusedDeclaredDependency>org.junit.jupiter:junit-jupiter-engine
-                                </ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.slf4j:slf4j-jdk14:jar:1.7.12:compile
-                                </ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>
-                                    pentaho-kettle:kettle-core:jar:${pentaho-kettle.version}
-                                </ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.junit.jupiter:junit-jupiter-engine</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.slf4j:slf4j-jdk14:jar:1.7.12</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>pentaho-kettle:kettle-core:jar:${pentaho-kettle.version}</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </execution>
