@@ -1,5 +1,8 @@
 # XML Extra Plugins for Pentaho KETTLE
 
+[![Java 8](https://img.shields.io/badge/java-8+-blue.svg)](https://adoptopenjdk.net/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 This project contains plugins for [Pentaho Data Integration](https://github.com/pentaho/pentaho-kettle) (or KETTLE as it
 is commonly known), that add additional functionality for working with XML.
 
